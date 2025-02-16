@@ -1,4 +1,5 @@
 using Microsoft.Extensions.AI;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,11 @@ app.UseExceptionHandler();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    app.MapScalarApiReference(options =>
+    {
+        options.Servers = [];
+    });
 }
 
 app.MapGet("chat/{chat}", async (IChatClient chatClient, string chat) =>

@@ -1,3 +1,5 @@
+using OptimizelyAspire.AppHost;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 var cache = builder.AddRedis("cache");
@@ -14,7 +16,8 @@ var apiService = builder.AddProject<Projects.OptimizelyAspire_ApiService>("apise
     .WithReference(chat)
     .WithReference(embeddings)
     .WaitFor(chat)
-    .WaitFor(embeddings);
+    .WaitFor(embeddings)
+    .WithScalar();
 
 builder.AddProject<Projects.OptimizelyAspire_Web>("webfrontend")
     .WithExternalHttpEndpoints()
